@@ -8,6 +8,7 @@ public class Welcome {
 		if (input.isBlank())
 			return "Hello, my friend";
 
+		input = input.replaceAll(" ", "");
 		String[] listeNom = input.split(",");
 		int nbUpp = searchNbUpp(listeNom);
 

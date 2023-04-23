@@ -62,4 +62,13 @@ class WelcomeTest {
 		assertEquals("Hello, Eric, Franck and Simon. AND HELLO, CHUT !", Welcome.welcome("CHUT,eric,franck,simon"));
 	}
 
+	@Test
+	void EX_8() {
+		assertEquals("Hello, Amy and Jerry. AND HELLO, BOB !", Welcome.welcome("Amy  ,  BOB,Jerry   "));
+		assertEquals("Hello, Marc and Kevin. AND HELLO, JEAN AND ARNOLD !",
+				Welcome.welcome("marc     ,JEAN, Kevin,ARNOLD"));
+		assertEquals("Hello, Eric, Franck and Simon. AND HELLO, CHUT !",
+				Welcome.welcome("     CHUT  ,eric ,  franck,  simon"));
+	}
+
 }
