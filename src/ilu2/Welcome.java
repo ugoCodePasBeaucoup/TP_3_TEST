@@ -10,6 +10,7 @@ public class Welcome {
 
 		input = input.replaceAll(" ", "");
 		String[] listeNom = input.split(",");
+		listeNom = formatListeNom(listeNom);
 		int nbUpp = searchNbUpp(listeNom);
 
 		StringBuilder sbl = creatLowerString(listeNom, listeNom.length - nbUpp);
@@ -45,9 +46,11 @@ public class Welcome {
 		for (int i = 0; i < listeNom.length; i++) {
 			if (!isUpperString(listeNom[i])) {
 				if (nbLowAdd > 0 && nbLowAdd == nbLow - 1)
-					sbl.append(" and " + listeNom[i].substring(0, 1).toUpperCase() + listeNom[i].substring(1));
+					sbl.append(" and " + listeNom[i].substring(1, 2).toUpperCase() + listeNom[i].substring(2));
 				else
-					sbl.append(", " + listeNom[i].substring(0, 1).toUpperCase() + listeNom[i].substring(1));
+					sbl.append(", " + listeNom[i].substring(1, 2).toUpperCase() + listeNom[i].substring(2));
+				if (listeNom[i].charAt(0) != '1')
+					sbl.append(" (x" + listeNom[i].charAt(0) + ")");
 				nbLowAdd++;
 			}
 		}
@@ -61,14 +64,48 @@ public class Welcome {
 		for (int i = 0; i < listeNom.length; i++) {
 			if (isUpperString(listeNom[i])) {
 				if (nbUppAdd > 0 && nbUppAdd == nbUpp - 1)
-					sbu.append(" AND " + listeNom[i]);
+					sbu.append(" AND " + listeNom[i].substring(1));
 				else
-					sbu.append(", " + listeNom[i]);
+					sbu.append(", " + listeNom[i].substring(1));
 				nbUppAdd++;
+				if (listeNom[i].charAt(0) != '1')
+					sbu.append(" (x" + listeNom[i].charAt(0) + ")");
 			}
 		}
 		sbu.append(" !");
 		return sbu;
+	}
+
+	private static String[] formatListeNom(String[] listeNom) {
+		String[] newListeNom = new String[listeNom.length];
+		int[] nb = new int[listeNom.length];
+		int nbNom = 0;
+		int pos;
+		for (int i = 0; i < listeNom.length; i++) {
+			if ((pos = posInTab(newListeNom, nbNom, listeNom[i])) != -1)
+				nb[pos]++;
+			else {
+				newListeNom[nbNom] = listeNom[i];
+				nb[nbNom] = 1;
+				nbNom++;
+			}
+		}
+		return addNumberToFront(newListeNom, nb, nbNom);
+	}
+
+	private static int posInTab(String[] tab, int size, String nom) {
+		for (int i = 0; i < size; i++) {
+			if (tab[i].toUpperCase().equals(nom.toUpperCase()))
+				return i;
+		}
+		return -1;
+	}
+
+	private static String[] addNumberToFront(String[] listeNom, int[] val, int size) {
+		String[] newListeNom = new String[size];
+		for (int i = 0; i < size; i++)
+			newListeNom[i] = val[i] + listeNom[i];
+		return newListeNom;
 	}
 
 }
