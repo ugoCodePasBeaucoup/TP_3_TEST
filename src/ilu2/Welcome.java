@@ -42,35 +42,45 @@ public class Welcome {
 
 	private static StringBuilder creatLowerString(String[] listeNom, int nbLow) {
 		StringBuilder sbl = new StringBuilder(hello[0]);
+		boolean yoda = false;
 		int nbLowAdd = 0;
 		for (int i = 0; i < listeNom.length; i++) {
 			if (!isUpperString(listeNom[i])) {
+				if (listeNom[i].length() > 3 && listeNom[i].substring(0, 4).toUpperCase().equals("YODA"))
+					yoda = true;
 				if (nbLowAdd > 0 && nbLowAdd == nbLow - 1)
-					sbl.append(" and " + listeNom[i].substring(1, 2).toUpperCase() + listeNom[i].substring(2));
+					sbl.append(" and " + listeNom[i].substring(0, 1).toUpperCase() + listeNom[i].substring(1));
 				else
-					sbl.append(", " + listeNom[i].substring(1, 2).toUpperCase() + listeNom[i].substring(2));
-				if (listeNom[i].charAt(0) != '1')
-					sbl.append(" (x" + listeNom[i].charAt(0) + ")");
+					sbl.append(", " + listeNom[i].substring(0, 1).toUpperCase() + listeNom[i].substring(1));
 				nbLowAdd++;
 			}
 		}
 
+		if (yoda) {
+			sbl.append(", Hello");
+			sbl.replace(0, 7, "");
+		}
 		return sbl;
 	}
 
 	private static StringBuilder creatUpperString(String[] listeNom, int nbUpp) {
 		StringBuilder sbu = new StringBuilder(hello[1]);
+		boolean yoda = false;
 		int nbUppAdd = 0;
 		for (int i = 0; i < listeNom.length; i++) {
 			if (isUpperString(listeNom[i])) {
+				if (listeNom[i].length() > 3 && listeNom[i].substring(0, 4).equals("YODA"))
+					yoda = true;
 				if (nbUppAdd > 0 && nbUppAdd == nbUpp - 1)
-					sbu.append(" AND " + listeNom[i].substring(1));
+					sbu.append(" AND " + listeNom[i]);
 				else
-					sbu.append(", " + listeNom[i].substring(1));
+					sbu.append(", " + listeNom[i]);
 				nbUppAdd++;
-				if (listeNom[i].charAt(0) != '1')
-					sbu.append(" (x" + listeNom[i].charAt(0) + ")");
 			}
+		}
+		if (yoda) {
+			sbu.append(", HELLO");
+			sbu.replace(0, 7, "");
 		}
 		sbu.append(" !");
 		return sbu;
@@ -103,8 +113,15 @@ public class Welcome {
 
 	private static String[] addNumberToFront(String[] listeNom, int[] val, int size) {
 		String[] newListeNom = new String[size];
-		for (int i = 0; i < size; i++)
-			newListeNom[i] = val[i] + listeNom[i];
+		for (int i = 0; i < size; i++) {
+			if (val[i] > 1) {
+				if (isUpperString(listeNom[i]))
+					newListeNom[i] = listeNom[i] + " (X" + val[i] + ")";
+				else
+					newListeNom[i] = listeNom[i] + " (x" + val[i] + ")";
+			} else
+				newListeNom[i] = listeNom[i];
+		}
 		return newListeNom;
 	}
 
