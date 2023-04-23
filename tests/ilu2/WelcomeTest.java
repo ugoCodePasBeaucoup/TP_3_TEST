@@ -29,16 +29,16 @@ class WelcomeTest {
 
 	@Test
 	void EX_3() {
-		assertEquals("Hello, BOB !", Welcome.welcome("BOB"));
-		assertEquals("Hello, DEPARDIEUX !", Welcome.welcome("DEPARDIEUX"));
-		assertEquals("Hello, CHUUUUUUT !", Welcome.welcome("CHUUUUUUT"));
+		assertEquals("HELLO, BOB !", Welcome.welcome("BOB"));
+		assertEquals("HELLO, DEPARDIEUX !", Welcome.welcome("DEPARDIEUX"));
+		assertEquals("HELLO, CHUUUUUUT !", Welcome.welcome("CHUUUUUUT"));
 	}
 
 	@Test
 	void EX_4() {
 		assertEquals("Hello, Amy, Bob", Welcome.welcome("amy,bob"));
 		assertEquals("Hello, Marc, Jean", Welcome.welcome("marc,Jean"));
-		assertEquals("Hello, Eric, CHUT !", Welcome.welcome("eric,CHUT"));
+		assertEquals("Hello, Eric, CHUT", Welcome.welcome("eric,CHUT"));
 	}
 
 }
