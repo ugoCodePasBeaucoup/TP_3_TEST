@@ -5,25 +5,32 @@ public class Welcome {
 	private static final String[] hello = { "Hello", "HELLO" };
 
 	public static String welcome(String input) {
+		// #### No entry ####
 		if (input.isBlank())
 			return "Hello, my friend";
 
+		// #### Format entry ####
 		input = input.replaceAll(" ", "");
 		String[] listeNom = input.split(",");
 		listeNom = formatListeNom(listeNom);
 		int nbUpp = searchNbUpp(listeNom);
 
+		// #### Creation string lower and Upper case ####
 		StringBuilder sbl = creatLowerString(listeNom, listeNom.length - nbUpp);
 		StringBuilder sbu = creatUpperString(listeNom, nbUpp);
 
+		// #### concatenation string ####
 		return fusionString(sbu, sbl);
 	}
+
+// #######################################################################################
 
 	private static boolean isUpperString(String input) {
 		return input.equals(input.toUpperCase());
 	}
 
 	private static String fusionString(StringBuilder sbu, StringBuilder sbl) {
+		// #### concatenation of lower and upper string ####
 		if (sbl.toString().equals("Hello"))
 			return sbu.toString();
 		if (sbu.toString().equals("HELLO !"))
@@ -32,6 +39,7 @@ public class Welcome {
 	}
 
 	private static int searchNbUpp(String[] listeNom) {
+		// #### Search number of name in Uppercase ####
 		int nb = 0;
 		for (int i = 0; i < listeNom.length; i++) {
 			if (isUpperString(listeNom[i]))
@@ -87,6 +95,7 @@ public class Welcome {
 	}
 
 	private static String[] formatListeNom(String[] listeNom) {
+		// #### add the number of occurrence of each name ####
 		String[] newListeNom = new String[listeNom.length];
 		int[] nb = new int[listeNom.length];
 		int nbNom = 0;
@@ -100,10 +109,11 @@ public class Welcome {
 				nbNom++;
 			}
 		}
-		return addNumberToFront(newListeNom, nb, nbNom);
+		return addNumberToBack(newListeNom, nb, nbNom);
 	}
 
 	private static int posInTab(String[] tab, int size, String nom) {
+		// #### return the position of the given name in the tab or -1 ####
 		for (int i = 0; i < size; i++) {
 			if (tab[i].toUpperCase().equals(nom.toUpperCase()))
 				return i;
@@ -111,7 +121,8 @@ public class Welcome {
 		return -1;
 	}
 
-	private static String[] addNumberToFront(String[] listeNom, int[] val, int size) {
+	private static String[] addNumberToBack(String[] listeNom, int[] val, int size) {
+		// #### add the number of occurrence of each name at the end (or nothing if 1)
 		String[] newListeNom = new String[size];
 		for (int i = 0; i < size; i++) {
 			if (val[i] > 1) {
